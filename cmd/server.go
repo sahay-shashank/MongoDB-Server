@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"syscall"
 
-	"github.com/sahay-shashank/mongodb-server/web/router"
+	"github.com/sahay-shashank/mongodb-server/internal/web/router"
 )
 
 func Server() {
