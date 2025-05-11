@@ -4,6 +4,9 @@ import "net/http"
 
 func NewRouter() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", baseHandler)
+	routes := NewRoutes()
+	for route, handler := range routes.getRoutes() {
+		mux.Handle(route, handler)
+	}
 	return mux
 }

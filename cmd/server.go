@@ -9,14 +9,27 @@ import (
 	"strconv"
 	"syscall"
 
+	"github.com/sahay-shashank/mongodb-server/internal/database"
 	"github.com/sahay-shashank/mongodb-server/internal/web/router"
 )
 
 func Server() {
+	databaseConnectionResult := database.InitDatabase()
+	if databaseConnectionResult.Error {
+		databaseConnectionResult.LogToStderr()
+		os.Exit(1)
+	}
+	databaseConnectionResult.LogToStdout()
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
 		<-quit
+		databaseCloseResult := database.CloseDatabase()
+		if databaseCloseResult.Error {
+			databaseConnectionResult.LogToStderr()
+			os.Exit(1)
+		}
+		databaseCloseResult.LogToStdout()
 		log.Println("Server shutting down...")
 		os.Exit(0)
 	}()
