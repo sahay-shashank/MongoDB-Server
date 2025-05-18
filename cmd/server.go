@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"syscall"
 
+	"github.com/sahay-shashank/mongodb-server/internal/core/auth"
 	"github.com/sahay-shashank/mongodb-server/internal/database"
 	"github.com/sahay-shashank/mongodb-server/internal/web/router"
 )
@@ -40,6 +41,11 @@ func Server() {
 	} else {
 		serverPort = "8080"
 	}
+	secret := os.Getenv("JWT_SECRET")
+	if secret == "" {
+		panic("JWT_SECRET not set")
+	}
+	auth.SetJWTSecret(secret)
 	svr := &http.Server{
 		Addr:    fmt.Sprintf(":%v", serverPort),
 		Handler: router.NewRouter(),

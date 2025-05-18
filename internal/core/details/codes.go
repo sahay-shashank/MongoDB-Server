@@ -10,6 +10,10 @@ const (
 
 	RegistrationFailure    = 301
 	RegistrationSuccessful = 302
+	AuthFailure            = 303
+	AuthSuccessful         = 304
+	JWTTokenFailure        = 305
+	JWTTokenSuccessful     = 306
 
 	DocumentInsertionFailure    = 601
 	DocumentInsertionSuccessful = 602
@@ -45,6 +49,10 @@ var message = map[int]string{
 
 	RegistrationFailure:    "Registration failed",
 	RegistrationSuccessful: "Registration successful",
+	AuthFailure:            "Authentication failed",
+	AuthSuccessful:         "Authentication successful",
+	JWTTokenFailure:        "JWT Token creation failure",
+	JWTTokenSuccessful:     "JWT Token create successful",
 
 	DocumentInsertionFailure:    "Failed to insert document.",
 	DocumentInsertionSuccessful: "Document inserted successfully.",

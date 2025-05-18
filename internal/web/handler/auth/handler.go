@@ -1,4 +1,4 @@
-package register_handler
+package auth_handler
 
 import (
 	"net/http"
@@ -7,10 +7,10 @@ import (
 	"github.com/sahay-shashank/mongodb-server/internal/web/utility"
 )
 
-func (registerHandler *registerHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (authHandler *authHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
-		registerHandler.Post(w, r)
+		authHandler.Post(w, r)
 	default:
 		apiError := details.APIDetails{
 			Error:      true,
@@ -21,10 +21,10 @@ func (registerHandler *registerHandler) ServeHTTP(w http.ResponseWriter, r *http
 	}
 }
 
-func newRegisterHandler() *registerHandler {
-	return &registerHandler{}
+func newAuthHandler() *authHandler {
+	return &authHandler{}
 }
 
 func SetRoutes(setterFunc func(string, http.Handler, bool)) {
-	setterFunc("/register", newRegisterHandler(), false)
+	setterFunc("/auth/token", newAuthHandler(), false)
 }

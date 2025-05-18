@@ -1,4 +1,4 @@
-package register_handler
+package auth_handler
 
 import (
 	"io"
@@ -10,7 +10,7 @@ import (
 	"github.com/sahay-shashank/mongodb-server/internal/web/utility"
 )
 
-func (registerHandler *registerHandler) Post(w http.ResponseWriter, r *http.Request) {
+func (authHandler *authHandler) Post(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 	if err != nil || len(data) == 0 {
 		log.Printf("%v", err)
@@ -23,10 +23,10 @@ func (registerHandler *registerHandler) Post(w http.ResponseWriter, r *http.Requ
 		utility.WriteHTTPJSON(w, http.StatusBadRequest, "Error Reading JSON body", apiError)
 		return
 	}
-	apiResult := tenant.NewRegister(data)
+	apiResult := tenant.NewAuth(data)
 	if apiResult.Error {
-		utility.WriteHTTPJSON(w, http.StatusInternalServerError, "Error during registration", apiResult)
+		utility.WriteHTTPJSON(w, http.StatusInternalServerError, "Error during Authentication", apiResult)
 		return
 	}
-	utility.WriteHTTPJSON(w, http.StatusOK, "Registation Completed", apiResult)
+	utility.WriteHTTPJSON(w, http.StatusOK, "Authentication Completed", apiResult)
 }

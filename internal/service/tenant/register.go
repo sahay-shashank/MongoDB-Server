@@ -10,8 +10,6 @@ import (
 	"github.com/sahay-shashank/mongodb-server/internal/service/data"
 )
 
-var validate = validator.New()
-
 func NewRegister(HTTPData []byte) details.APIDetails {
 	var request models.RegistrationRequest
 	if err := json.Unmarshal(HTTPData, &request); err != nil {
@@ -35,7 +33,7 @@ func NewRegister(HTTPData []byte) details.APIDetails {
 			AdditionalDetails: errorMessages,
 		}
 	}
-	query := fmt.Sprintf(`{"email": "%s"}`, request.Email)
+	query := fmt.Sprintf(`{"email": "%s","service":"%s"}`, request.Email, request.Service)
 	var tenant models.Tenant
 	findResult := data.FindOneDocument("tenants", "tenant_info", &tenant, []byte(query))
 	if findResult.StatusCode == details.NoDocumentFound {
@@ -50,7 +48,7 @@ func NewRegister(HTTPData []byte) details.APIDetails {
 			}
 		}
 
-		indexResult := data.InsertIndex("tenants", "tenant_info", []byte(`{"email":1}`), true)
+		indexResult := data.InsertIndex("tenants", "tenant_info", []byte(`{"email":1,"service":1}`), true)
 		if indexResult.Error {
 			return details.APIDetails{
 				Error:             true,

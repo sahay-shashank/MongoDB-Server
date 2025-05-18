@@ -1,12 +1,21 @@
 package router
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/sahay-shashank/mongodb-server/internal/web/middleware"
+)
 
 func NewRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 	routes := NewRoutes()
-	for route, handler := range routes.getRoutes() {
-		mux.Handle(route, handler)
+	middlewares := NewMiddleware()
+	for routePath, route := range routes.getRoutes() {
+		handler := route.handler
+		if route.protected {
+			handler = middleware.ApplyMiddleware(handler, middlewares.getMiddleware())
+		}
+		mux.Handle(routePath, handler)
 	}
 	return mux
 }
