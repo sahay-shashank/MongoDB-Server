@@ -8,6 +8,7 @@ import (
 	"github.com/sahay-shashank/mongodb-server/internal/core/auth"
 	"github.com/sahay-shashank/mongodb-server/internal/core/details"
 	"github.com/sahay-shashank/mongodb-server/internal/core/models"
+	"github.com/sahay-shashank/mongodb-server/internal/core/utils"
 	"github.com/sahay-shashank/mongodb-server/internal/service/data"
 )
 
@@ -21,7 +22,7 @@ func NewAuth(httpData []byte) details.APIDetails {
 			AdditionalDetails: err,
 		}
 	}
-	if err := validate.Struct(request); err != nil {
+	if err := utils.Validate.Struct(request); err != nil {
 		var errorMessages []string
 		for _, err := range err.(validator.ValidationErrors) {
 			errorMessage := fmt.Sprintf("Field '%s' failed validation: %s", err.Field(), err.Tag())
