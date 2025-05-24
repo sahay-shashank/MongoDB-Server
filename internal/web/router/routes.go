@@ -5,6 +5,7 @@ import (
 
 	authWebHandler "github.com/sahay-shashank/mongodb-server/internal/web/handler/auth"
 	registerWebHandler "github.com/sahay-shashank/mongodb-server/internal/web/handler/register"
+	schemaWebHandler "github.com/sahay-shashank/mongodb-server/internal/web/handler/schema"
 )
 
 type RoutesInterface interface {
@@ -41,5 +42,6 @@ func NewRoutes() RoutesInterface {
 	}
 	registerWebHandler.SetRoutes(routes.setRoutes)
 	authWebHandler.SetRoutes(routes.setRoutes)
+	schemaWebHandler.SetRoutes(routes.setRoutes)
 	return &routes
 }
