@@ -3,3 +3,7 @@ go.sum
 
 # Environment Variables
 .env
+
+# Build files
+
+bin/
