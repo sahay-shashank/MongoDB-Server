@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	authWebHandler "github.com/sahay-shashank/mongodb-server/internal/web/handler/auth"
+	insertWebHandler "github.com/sahay-shashank/mongodb-server/internal/web/handler/insert"
 	registerWebHandler "github.com/sahay-shashank/mongodb-server/internal/web/handler/register"
 	schemaWebHandler "github.com/sahay-shashank/mongodb-server/internal/web/handler/schema"
 )
@@ -43,5 +44,6 @@ func NewRoutes() RoutesInterface {
 	registerWebHandler.SetRoutes(routes.setRoutes)
 	authWebHandler.SetRoutes(routes.setRoutes)
 	schemaWebHandler.SetRoutes(routes.setRoutes)
+	insertWebHandler.SetRoutes(routes.setRoutes)
 	return &routes
 }

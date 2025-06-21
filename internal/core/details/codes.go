@@ -26,21 +26,26 @@ const (
 	SchemaFieldNotFound               = 315
 	SchemaFieldsFound                 = 316
 	SchemaDeletionSuccessful          = 317
+	InsertionSuccessful               = 318
+	InsertionFailure                  = 319
+	SchemaDeletionFailure             = 320
 
-	DocumentInsertionFailure    = 601
-	DocumentInsertionSuccessful = 602
-	IndexInsertionFailure       = 603
-	IndexInsertionSuccessful    = 604
-	DocumentFindFailure         = 605
-	DocumentFindSuccessful      = 606
-	NoDocumentFound             = 607
-	CollectionCreationSuccess   = 608
-	CollectionCreationFailure   = 609
-	FindCollectionFailure       = 610
-	CollectionExists            = 611
-	CollectionNotFound          = 612
-	CollectionDeletionFailure   = 613
-	CollectionDeletionSuccess   = 614
+	DocumentInsertionFailure        = 601
+	DocumentInsertionSuccessful     = 602
+	IndexInsertionFailure           = 603
+	IndexInsertionSuccessful        = 604
+	DocumentFindFailure             = 605
+	DocumentFindSuccessful          = 606
+	NoDocumentFound                 = 607
+	CollectionCreationSuccess       = 608
+	CollectionCreationFailure       = 609
+	FindCollectionFailure           = 610
+	CollectionExists                = 611
+	CollectionNotFound              = 612
+	CollectionDeletionFailure       = 613
+	CollectionDeletionSuccess       = 614
+	CollectionDeletionSchemaSuccess = 615
+	CollectionDeletionSchemaFailure = 616
 
 	EnvVariableNotDefined = 401
 
@@ -60,6 +65,8 @@ const (
 	MongoDBCollectionSuccess           = 512
 	MongoDBCollectionDeletionFailure   = 513
 	MongoDBCollectionDeletionSuccess   = 514
+	MongoDBCommandSuccessful           = 515
+	MongoDBCommandFailure              = 516
 )
 
 var message = map[int]string{
@@ -88,21 +95,26 @@ var message = map[int]string{
 	SchemaFieldNotFound:               "Schema field not found",
 	SchemaFieldsFound:                 "Schema fields found",
 	SchemaDeletionSuccessful:          "Schema deleted successfully",
+	InsertionSuccessful:               "Insertion Successful",
+	InsertionFailure:                  "Insertion Failure",
+	SchemaDeletionFailure:             "Schema deletion failure",
 
-	DocumentInsertionFailure:    "Failed to insert document.",
-	DocumentInsertionSuccessful: "Document inserted successfully.",
-	IndexInsertionFailure:       "Failed to insert Index",
-	IndexInsertionSuccessful:    "Index inserted successfully",
-	DocumentFindFailure:         "Failed to find Document",
-	DocumentFindSuccessful:      "Document found successfully",
-	NoDocumentFound:             "No Document Found",
-	CollectionCreationSuccess:   "Collection Created successfully",
-	CollectionCreationFailure:   "Collection creation failed",
-	FindCollectionFailure:       "Failed during finding collection",
-	CollectionExists:            "Collection exists",
-	CollectionNotFound:          "Collection not found",
-	CollectionDeletionFailure:   "Failure during deletion of collection",
-	CollectionDeletionSuccess:   "Collection deleted successfully",
+	DocumentInsertionFailure:        "Failed to insert document.",
+	DocumentInsertionSuccessful:     "Document inserted successfully.",
+	IndexInsertionFailure:           "Failed to insert Index",
+	IndexInsertionSuccessful:        "Index inserted successfully",
+	DocumentFindFailure:             "Failed to find Document",
+	DocumentFindSuccessful:          "Document found successfully",
+	NoDocumentFound:                 "No Document Found",
+	CollectionCreationSuccess:       "Collection Created successfully",
+	CollectionCreationFailure:       "Collection creation failed",
+	FindCollectionFailure:           "Failed during finding collection",
+	CollectionExists:                "Collection exists",
+	CollectionNotFound:              "Collection not found",
+	CollectionDeletionFailure:       "Failure during deletion of collection",
+	CollectionDeletionSuccess:       "Collection deleted successfully",
+	CollectionDeletionSchemaSuccess: "Collection Schema removed successfully",
+	CollectionDeletionSchemaFailure: "Collection Schema removal failed",
 
 	EnvVariableNotDefined: "Environment Variable not defined",
 
@@ -120,6 +132,8 @@ var message = map[int]string{
 	MongoDBCollectionSuccess:           "MongoDB collection creation successful",
 	MongoDBCollectionDeletionFailure:   "MongoDB collection deletion failed",
 	MongoDBCollectionDeletionSuccess:   "MongoDB collection deletion successful",
+	MongoDBCommandSuccessful:           "MongoDB Command ran successfully",
+	MongoDBCommandFailure:              "MongoDB Command failed",
 	// MongoDBSchemaRegistrationSuccessful: "Schema addition to MongoDB Successfully",
 	// MongoDBSchemaRegistrationFailure:    "Schema addition to MongoDB Failed",
 

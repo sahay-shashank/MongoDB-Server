@@ -80,3 +80,24 @@ func DeleteCollection(db string, collection string) details.APIDetails {
 		Message:    details.GetMessage(details.CollectionDeletionSuccess),
 	}
 }
+
+func DeleteCollectionSchema(db string, collection string) details.APIDetails {
+	command := bson.D{
+		{Key: "collMod", Value: collection},
+		{Key: "validator", Value: bson.D{}},
+		{Key: "validationLevel", Value: "off"},
+	}
+	deleteSchemaResult := database.RunCommand(db, command)
+	if deleteSchemaResult.Error {
+		return details.APIDetails{
+			Error:             true,
+			StatusCode:        details.CollectionDeletionSchemaFailure,
+			Message:           details.GetMessage(details.CollectionDeletionSchemaFailure),
+			AdditionalDetails: deleteSchemaResult,
+		}
+	}
+	return details.APIDetails{
+		StatusCode: details.CollectionDeletionSchemaSuccess,
+		Message:    details.GetMessage(details.CollectionDeletionSchemaSuccess),
+	}
+}

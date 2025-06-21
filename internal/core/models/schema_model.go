@@ -10,6 +10,10 @@ import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
+type DeleteSchemaRequest struct {
+	Collection string `json:"collection"`
+}
+
 type schema struct {
 	Collection []collectionSchema `json:"collections" validate:"required,min=1,dive"`
 }

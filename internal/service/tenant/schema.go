@@ -1,6 +1,8 @@
 package tenant
 
 import (
+	"encoding/json"
+
 	"github.com/sahay-shashank/mongodb-server/internal/core/details"
 	"github.com/sahay-shashank/mongodb-server/internal/core/models"
 	"github.com/sahay-shashank/mongodb-server/internal/service/data"
@@ -55,11 +57,28 @@ func NewSchema(tenantID string, service string, dataHTTP []byte) details.APIDeta
 	}
 }
 
-// func DeleteSchema(tenantID string, service string, dataHTTP []byte) details.APIDetails {
-// 	db := tenantID + "_" + service
-// 	deleteResult := data.DeleteCollection(db,)
-// 	return details.APIDetails{
-// 		StatusCode: details.SchemaDeletionSuccessful,
-// 		Message:    details.GetMessage(details.SchemaDeletionSuccessful),
-// 	}
-// }
+func DeleteSchema(tenantID string, service string, dataHTTP []byte) details.APIDetails {
+	var deleteRequest models.DeleteSchemaRequest
+	if err := json.Unmarshal(dataHTTP, &deleteRequest); err != nil {
+		return details.APIDetails{
+			Error:             true,
+			StatusCode:        details.JSONInvalid,
+			Message:           details.GetMessage(details.JSONInvalid),
+			AdditionalDetails: err,
+		}
+	}
+	db := tenantID + "_" + service
+	deleteResult := data.DeleteCollectionSchema(db, deleteRequest.Collection)
+	if deleteResult.Error {
+		return details.APIDetails{
+			Error:             true,
+			StatusCode:        details.SchemaDeletionFailure,
+			Message:           details.GetMessage(details.SchemaDeletionFailure),
+			AdditionalDetails: deleteResult,
+		}
+	}
+	return details.APIDetails{
+		StatusCode: details.SchemaDeletionSuccessful,
+		Message:    details.GetMessage(details.SchemaDeletionSuccessful),
+	}
+}

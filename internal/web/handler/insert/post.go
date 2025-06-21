@@ -1,4 +1,4 @@
-package schema_handler
+package insert_handler
 
 import (
 	"io"
@@ -11,7 +11,7 @@ import (
 	"github.com/sahay-shashank/mongodb-server/internal/web/utility"
 )
 
-func (schemaHandler *schemaHandler) Delete(w http.ResponseWriter, r *http.Request) {
+func (insertHandler *insertHandler) Post(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 	if err != nil || len(data) == 0 {
 		log.Printf("%v", err)
@@ -34,13 +34,13 @@ func (schemaHandler *schemaHandler) Delete(w http.ResponseWriter, r *http.Reques
 			StatusCode: details.ContextNotFound,
 			Message:    details.GetMessage(details.ContextNotFound),
 		}
-		utility.WriteHTTPJSON(w, http.StatusInternalServerError, "Error during schema deletion", apiError)
+		utility.WriteHTTPJSON(w, http.StatusInternalServerError, "Error during schema registration", apiError)
 		return
 	}
-	apiResult := tenant.DeleteSchema(tenantID, service, data)
+	apiResult := tenant.NewInsert(tenantID, service, data)
 	if apiResult.Error {
-		utility.WriteHTTPJSON(w, http.StatusInternalServerError, "Error during schema deletion", apiResult)
+		utility.WriteHTTPJSON(w, http.StatusInternalServerError, "Error during Insertion", apiResult)
 		return
 	}
-	utility.WriteHTTPJSON(w, http.StatusOK, "Schema Registation Deleted", apiResult)
+	utility.WriteHTTPJSON(w, http.StatusOK, "Insertion Completed", apiResult)
 }
